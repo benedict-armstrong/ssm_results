@@ -1,0 +1,160 @@
+_wandb:
+    value:
+        cli_version: 0.21.0
+        e:
+            xkh6xi6tqqtp6dbho00zm1vyqvuyoip1:
+                args:
+                    - +experiment=s4d/sine_gaussian
+                    - dataset.root_path=/fast/barmstrong/ligoss/data/sg_pt/
+                cpu_count: 128
+                cpu_count_logical: 4
+                cudaVersion: "12.3"
+                disk:
+                    /:
+                        total: "105425473536"
+                        used: "61047795712"
+                email: ben@armstrongconsulting.com
+                executable: /lustre/home/barmstrong/ligoss/.venv/bin/python3
+                gpu: NVIDIA A100-SXM4-80GB
+                gpu_count: 1
+                gpu_nvidia:
+                    - architecture: Ampere
+                      cudaCores: 6912
+                      memoryTotal: "85899345920"
+                      name: NVIDIA A100-SXM4-80GB
+                      uuid: GPU-94f9ad66-e68b-7d86-fc3b-844402c8f6a9
+                host: g138
+                memory:
+                    total: "33554432000"
+                os: Linux-5.15.0-89-generic-x86_64-with-glibc2.35
+                program: -m src.main
+                python: CPython 3.12.11
+                root: /lustre/home/barmstrong/ligoss/outputs/singlerun/2025-08-29/19-53-06
+                startedAt: "2025-08-29T17:53:14.791063Z"
+                writerId: xkh6xi6tqqtp6dbho00zm1vyqvuyoip1
+        m:
+            - "1": trainer/global_step
+              "6":
+                - 3
+              "7": []
+            - "2": '*'
+              "5": 1
+              "6":
+                - 1
+              "7": []
+        python_version: 3.12.11
+        t:
+            "1":
+                - 1
+                - 5
+                - 9
+                - 12
+                - 30
+                - 50
+                - 53
+                - 103
+                - 106
+            "2":
+                - 1
+                - 5
+                - 9
+                - 12
+                - 30
+                - 50
+                - 53
+                - 103
+                - 106
+            "3":
+                - 2
+                - 7
+                - 13
+                - 15
+                - 16
+                - 66
+            "4": 3.12.11
+            "5": 0.21.0
+            "12": 0.21.0
+            "13": linux-x86_64
+dataset:
+    value:
+        datasfx: gaussian_smear_sigma0.4
+        name: sine_gaussian
+        root_path: /fast/barmstrong/ligoss/data/sg_pt
+        shuffle: "True"
+load_from_checkpoint:
+    value: None
+mode:
+    value: all
+model:
+    value:
+        encoder:
+            dropout_rate: "0.0"
+            hidden_dim: "16"
+            name: linoss_encoder
+            num_blocks: "4"
+            pass_through: "False"
+            sequence_mixer:
+                dim: "64"
+                name: s4d
+                transposed: "False"
+            use_embedding: "False"
+        heads:
+            - linear_output: "True"
+              loss_fns:
+                - name: gaussian_nll
+                  weight: "1.0"
+              metrics:
+                - gll_mse
+                - param_1_l1_diff
+                - param_2_l1_diff
+                - param_3_magnitude
+                - param_4_magnitude
+              name: regression
+              output_dim: "4"
+              output_step: "1"
+        sequence_mixer: None
+output_dir:
+    value: None
+param_count:
+    value: 8612
+seed:
+    value: "42"
+test:
+    value:
+        batch_size: None
+        output_path: outputs/results
+train:
+    value:
+        batch_size: "1000"
+        check_val_every_n_epoch: "1"
+        checkpoint:
+            every_n_steps: None
+            metric: val/loss
+            metric_top_k: "5"
+            mode: min
+            step_top_k: "10"
+            warmup_steps: None
+        clip_grad_global_norm: None
+        dataloader_num_workers: "4"
+        early_stopping: None
+        log_every_n_steps: "10"
+        lr:
+            decay_rate: "0.99"
+            init_value: "0.005"
+            name: exponential_decay
+            transition_steps: "10000"
+        max_epochs: "120"
+        max_steps: None
+        min_epochs: "120"
+        min_steps: None
+        val_check_interval: "80"
+        weight_decay: "0.01"
+use_compilation_cache:
+    value: "True"
+wandb:
+    value:
+        mode: online
+        name: sine_gaussian/linoss_encoder
+        notes: None
+        project: ligoss
+        tags: []
