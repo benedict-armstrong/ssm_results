@@ -116,7 +116,7 @@ if __name__ == "__main__":
     data_dir = "results"
     for model_dir in os.listdir(data_dir):
         model_dir = os.path.join(data_dir, model_dir)
-        for type in ["sine_gassian", "sho"]:
+        for type in ["sine_gaussian", "sho"]:
             for loss in ["gaussian_nll", "quantile_loss"]:
                 directory = os.path.join(model_dir, type, loss)
                 try:
@@ -128,7 +128,7 @@ if __name__ == "__main__":
                     )
                     if type == "sho":
                         type = "dho"
-                    if type == "sine_gassian":
+                    if type == "sine_gaussian":
                         type = "sg"
 
                     print(directory)
