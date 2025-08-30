@@ -1,0 +1,11 @@
+[project]
+name = "outputs"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "corner>=2.2.3",
+    "pandas>=2.3.2",
+    "scipy>=1.16.1",
+]
