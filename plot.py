@@ -92,14 +92,16 @@ def toy_plots(outputs, targets, datatype, prefix="plot", savedir="."):
     # the numbers should be in the format of 0.000, 0.000, 0.000
     with open(os.path.join(savedir, "param1.txt"), "w") as f:
         # f.write(f"{param1[0]:.3f}, {param1[1]:.3f}, {param1[2]:.3f}")
-        s = f"\({param1[1]:.3f}^{{+{param1[2]:.3f}}}_{{{param1[0]:.3f}}}\) & \\"
-        print(s)
-        f.write(s)
+        s1 = f"\({param1[1]:.3f}^{{+{param1[2]:.3f}}}_{{{param1[0]:.3f}}}\) &"
+        # print(s1)
+        f.write(s1)
     with open(os.path.join(savedir, "param2.txt"), "w") as f:
         # f.write(f"{param2[0]:.3f}, {param2[1]:.3f}, {param2[2]:.3f}")
-        s = f"\({param2[1]:.3f}^{{+{param2[2]:.3f}}}_{{{param2[0]:.3f}}}\) &"
-        print(s)
-        f.write(s)
+        s2 = f"\({param2[1]:.3f}^{{+{param2[2]:.3f}}}_{{{param2[0]:.3f}}}\) &"
+        # print(s2)
+        f.write(s2)
+
+    print(f"{s1} {s2}")
 
 
 if __name__ == "__main__":
