@@ -6,7 +6,7 @@ import corner
 def savefig(plot, savedir, name):
     path = os.path.join(savedir, name)
     plot.savefig(path, bbox_inches="tight")
-    print(f"Saved {path}.")
+    # print(f"Saved {path}.")
     return
 
 
@@ -82,7 +82,24 @@ def toy_plots(outputs, targets, datatype, prefix="plot", savedir="."):
     savefig(figure_diffs, savedir, f"{prefix}_diffs.png")
     savefig(figure_sigmas, savedir, f"{prefix}_sigmas.png")
     savefig(figure_z_scores, savedir, f"{prefix}_z_scores.png")
-    return
+
+    qs = np.quantile(diffs, [0.1587, 0.5, 0.8413], axis=0)
+
+    param1 = np.round(qs[:, 0], 3)
+    param2 = np.round(qs[:, 1], 3)
+
+    # save to file savedir/param1.txt and savedir/param2.txt
+    # the numbers should be in the format of 0.000, 0.000, 0.000
+    with open(os.path.join(savedir, "param1.txt"), "w") as f:
+        # f.write(f"{param1[0]:.3f}, {param1[1]:.3f}, {param1[2]:.3f}")
+        s = f"\({param1[1]:.3f}^{{+{param1[2]:.3f}}}_{{{param1[0]:.3f}}}\) & \\"
+        print(s)
+        f.write(s)
+    with open(os.path.join(savedir, "param2.txt"), "w") as f:
+        # f.write(f"{param2[0]:.3f}, {param2[1]:.3f}, {param2[2]:.3f}")
+        s = f"\({param2[1]:.3f}^{{+{param2[2]:.3f}}}_{{{param2[0]:.3f}}}\) &"
+        print(s)
+        f.write(s)
 
 
 if __name__ == "__main__":
@@ -95,13 +112,26 @@ if __name__ == "__main__":
     Read in these files into numpy arrays and then run the toy_plots function.
 
     """
+    # data_dir = "results_16_hidden_dim"
     data_dir = "results"
     for model_dir in os.listdir(data_dir):
         model_dir = os.path.join(data_dir, model_dir)
-        for type in ["sg", "sho"]:
-            directory = os.path.join(model_dir, type)
-            outputs = np.loadtxt(os.path.join(directory, "outputs.csv"), delimiter=",")
-            targets = np.loadtxt(os.path.join(directory, "targets.csv"), delimiter=",")
-            if type == "sho":
-                type = "dho"
-            toy_plots(outputs, targets, type, savedir=directory)
+        for type in ["sine_gassian", "sho"]:
+            for loss in ["gaussian_nll", "quantile_loss"]:
+                directory = os.path.join(model_dir, type, loss)
+                try:
+                    outputs = np.loadtxt(
+                        os.path.join(directory, "outputs.csv"), delimiter=","
+                    )
+                    targets = np.loadtxt(
+                        os.path.join(directory, "targets.csv"), delimiter=","
+                    )
+                    if type == "sho":
+                        type = "dho"
+                    if type == "sine_gassian":
+                        type = "sg"
+
+                    print(directory)
+                    toy_plots(outputs, targets, type, savedir=directory)
+                except FileNotFoundError:
+                    print(f"FileNotFoundError: {directory}")
