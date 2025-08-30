@@ -133,5 +133,31 @@ if __name__ == "__main__":
 
                     print(directory)
                     toy_plots(outputs, targets, type, savedir=directory)
+
+                    # save results to a csv file with the following columns:
+                    # pred_param1, truth_param1, pred_param2, truth_param2, loss_per_saample (dummy), pred_sigma1, pred_sigma2
+                    # the file should be saved in the directory
+                    preds, sigmas = outputs[:, :2], outputs[:, 2:4]
+                    sigmas = np.sqrt(sigmas)
+                    results_kevin = np.stack(
+                        [
+                            preds[:, 0],
+                            targets[:, 0],
+                            preds[:, 1],
+                            targets[:, 1],
+                            np.zeros_like(preds[:, 0]),
+                            sigmas[:, 0],
+                            sigmas[:, 1],
+                        ],
+                        axis=1,
+                    )
+                    np.savetxt(
+                        os.path.join(directory, "results_kevin.csv"),
+                        results_kevin,
+                        delimiter=",",
+                        header="pred_param1,truth_param1,pred_param2,truth_param2,loss_per_sample,pred_sigma1,pred_sigma2",
+                        comments="",
+                    )
+
                 except FileNotFoundError:
                     print(f"FileNotFoundError: {directory}")
