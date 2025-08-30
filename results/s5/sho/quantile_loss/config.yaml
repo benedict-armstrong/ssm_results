@@ -1,0 +1,167 @@
+_wandb:
+    value:
+        cli_version: 0.21.0
+        e:
+            9tcn3hshfasv9szvcstpw350tvaz4v9w:
+                args:
+                    - +experiment=s5/sho
+                    - dataset.root_path=/fast/barmstrong/ligoss/data/sho_pt/
+                cpu_count: 96
+                cpu_count_logical: 4
+                cudaVersion: "12.3"
+                disk:
+                    /:
+                        total: "943755005952"
+                        used: "59024314368"
+                email: ben@armstrongconsulting.com
+                executable: /lustre/home/barmstrong/ligoss/.venv/bin/python3
+                gpu: NVIDIA H100
+                gpu_count: 1
+                gpu_nvidia:
+                    - architecture: Hopper
+                      cudaCores: 16896
+                      memoryTotal: "100485038080"
+                      name: NVIDIA H100
+                      uuid: GPU-5e375165-83cc-279e-8fc9-8f6d48a9e8bf
+                host: g190
+                memory:
+                    total: "33554432000"
+                os: Linux-5.15.0-89-generic-x86_64-with-glibc2.35
+                program: -m src.main
+                python: CPython 3.12.11
+                root: /lustre/home/barmstrong/ligoss/outputs/singlerun/2025-08-30/05-14-14/4e7f
+                startedAt: "2025-08-30T03:14:25.737149Z"
+                writerId: 9tcn3hshfasv9szvcstpw350tvaz4v9w
+        m:
+            - "1": trainer/global_step
+              "6":
+                - 3
+              "7": []
+            - "2": '*'
+              "5": 1
+              "6":
+                - 1
+              "7": []
+        python_version: 3.12.11
+        t:
+            "1":
+                - 1
+                - 5
+                - 9
+                - 12
+                - 30
+                - 50
+                - 53
+                - 103
+                - 106
+            "2":
+                - 1
+                - 5
+                - 9
+                - 12
+                - 30
+                - 50
+                - 53
+                - 103
+                - 106
+            "3":
+                - 2
+                - 7
+                - 13
+                - 15
+                - 16
+                - 66
+            "4": 3.12.11
+            "5": 0.21.0
+            "12": 0.21.0
+            "13": linux-x86_64
+dataset:
+    value:
+        datasfx: gaussian_smear_sigma0.4
+        name: sho
+        root_path: /fast/barmstrong/ligoss/data/sho_pt
+        shuffle: "True"
+load_from_checkpoint:
+    value: None
+mode:
+    value: all
+model:
+    value:
+        encoder:
+            dropout_rate: "0.0"
+            hidden_dim: "6"
+            name: linoss_encoder
+            num_blocks: "4"
+            pass_through: "False"
+            sequence_mixer:
+                C_init: lecun_normal
+                clip_eigs: "True"
+                conj_sym: "True"
+                dim: "64"
+                discretisation: zoh
+                dt_max: "1.0"
+                dt_min: "0.001"
+                name: s5
+                ssm_blocks: "8"
+                step_rescale: "1.0"
+            use_embedding: "False"
+        heads:
+            - linear_output: "True"
+              loss_fns:
+                - name: quantile_loss
+                  quantiles:
+                    - "0.1587"
+                    - "0.8413"
+                  weight: "1.0"
+              metrics:
+                - q_loss_mse
+                - q_loss_l1
+              name: regression
+              output_dim: "6"
+              output_step: "1"
+        sequence_mixer: None
+output_dir:
+    value: /lustre/home/barmstrong/ligoss/outputs/singlerun/2025-08-30/05-14-14/4e7f
+param_count:
+    value: 3918
+seed:
+    value: "42"
+test:
+    value:
+        batch_size: None
+        output_path: outputs/results
+train:
+    value:
+        batch_size: "1000"
+        check_val_every_n_epoch: "1"
+        checkpoint:
+            every_n_steps: None
+            metric: val/loss
+            metric_top_k: "5"
+            mode: min
+            step_top_k: "10"
+            warmup_steps: None
+        clip_grad_global_norm: None
+        dataloader_num_workers: "4"
+        early_stopping: None
+        log_every_n_steps: "80"
+        lr:
+            decay_rate: "0.99"
+            init_value: "0.005"
+            name: exponential_decay
+            transition_steps: "10000"
+        max_epochs: "120"
+        max_steps: None
+        min_epochs: "120"
+        min_steps: None
+        val_check_interval: "80"
+        weight_decay: "0.01"
+use_compilation_cache:
+    value: "True"
+wandb:
+    value:
+        mode: online
+        name: sho/linoss_encoder
+        notes: None
+        project: ligoss
+        tags: []

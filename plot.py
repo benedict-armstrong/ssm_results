@@ -127,12 +127,12 @@ if __name__ == "__main__":
                         os.path.join(directory, "targets.csv"), delimiter=","
                     )
                     if type == "sho":
-                        type = "dho"
+                        temp = "dho"
                     if type == "sine_gaussian":
-                        type = "sg"
+                        temp = "sg"
 
                     print(directory)
-                    toy_plots(outputs, targets, type, savedir=directory)
+                    toy_plots(outputs, targets, temp, savedir=directory)
 
                     # save results to a csv file with the following columns:
                     # pred_param1, truth_param1, pred_param2, truth_param2, loss_per_saample (dummy), pred_sigma1, pred_sigma2
