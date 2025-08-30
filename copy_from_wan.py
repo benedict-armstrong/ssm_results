@@ -19,6 +19,19 @@ for row in df.itertuples():
     results_dir = f"results/{model_name}/{experiment}/{loss}"
     os.makedirs(results_dir, exist_ok=True)
 
+    # skip if config.yaml is already in the results_dir
+    if os.path.exists(os.path.join(results_dir, "config.yaml")):
+        continue
+
+    # from mpi:<outdir>/wandb/latest-run/files/config.yaml if not found continue
+    s = subprocess.run(
+        f"scp mpi:{output_dir}/wandb/latest-run/files/config.yaml {results_dir}/config.yaml",
+        shell=True,
+    )
+    if s.returncode != 0:
+        print(f"Failed to copy config.yaml from {output_dir}")
+        continue
+
     # Copy files using scp from scp mpi:<outdir>/test_outputs... to results/<model_name>/<experiment>
     # Copy outputs.csv, targets.csv
     subprocess.run(
@@ -27,11 +40,5 @@ for row in df.itertuples():
     )
     subprocess.run(
         f"scp mpi:{output_dir}/test_outputs/targets.csv {results_dir}/targets.csv",
-        shell=True,
-    )
-
-    # from mpi:<outdir>/wandb/latest-run/files/config.yaml
-    subprocess.run(
-        f"scp mpi:{output_dir}/wandb/latest-run/files/config.yaml {results_dir}/config.yaml",
         shell=True,
     )
